@@ -1,0 +1,227 @@
+/* All styles of the app. Colours are at the top (:root) - change them there. */
+    /* ============================================================
+       1. COLOURS & BASIC SETTINGS
+       Change the colours here and the whole page changes.
+       ============================================================ */
+    :root {
+      --blue:        #1a6ce8;
+      --blue-dark:   #1556bd;
+      --blue-light:  #e8f0fe;
+      --green:       #22b33a;
+      --red:         #d93025;
+      --grey-bg:     #f3f4f7;
+      --grey-border: #d5d8de;
+      --text:        #222222;
+      --text-light:  #6b7280;
+      --white:       #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--grey-bg);
+    }
+
+    /* the whole React app: top bar + split screen, full window height */
+    .app {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ============================================================
+       2. TOP BAR
+       ============================================================ */
+    .topbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--grey-border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .topbar h1 { margin: 0; font-size: 20px; color: var(--blue); }
+    .topbar span { color: var(--text-light); font-size: 13px; }
+
+    /* ============================================================
+       3. SPLIT SCREEN  (left = image, right = form)
+       ============================================================ */
+    .split {
+      flex: 1;                 /* take all remaining height */
+      display: flex;
+      min-height: 0;           /* needed so children can scroll */
+    }
+    .left-panel, .right-panel {
+      width: 50%;
+      padding: 14px;
+      overflow-y: auto;        /* each side scrolls on its own */
+    }
+    .left-panel { border-right: 2px solid var(--grey-border); }
+
+    /* small screens: stack one below the other */
+    @media (max-width: 900px) {
+      .app { height: auto; }
+      .split { flex-direction: column; }
+      .left-panel, .right-panel { width: 100%; }
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--grey-border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .card h3 { margin: 0 0 8px 0; font-size: 15px; }
+
+    /* keeps the 4 extraction buttons always visible at the bottom of the left side */
+    .sticky-actions {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    /* ============================================================
+       4. BUTTONS
+       ============================================================ */
+    button {
+      font-family: inherit;
+      font-size: 13px;
+      padding: 8px 12px;
+      border: 1px solid var(--grey-border);
+      border-radius: 6px;
+      background: var(--white);
+      cursor: pointer;
+    }
+    button:hover { background: var(--grey-bg); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-blue  { background: var(--blue);  color: #fff; border-color: var(--blue); }
+    .btn-blue:hover { background: var(--blue-dark); }
+    .btn-green { background: var(--green); color: #fff; border-color: var(--green); }
+    .btn-green:hover { background: #1b9230; }
+    .btn-small { padding: 4px 8px; font-size: 12px; }
+
+    .button-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    /* ============================================================
+       5. LEFT SIDE  (upload + cropper)
+       ============================================================ */
+    #drop-zone {
+      border: 2px dashed var(--grey-border);
+      border-radius: 8px;
+      padding: 30px 10px;
+      text-align: center;
+      color: var(--text-light);
+      background: var(--white);
+      cursor: pointer;
+    }
+    #drop-zone.drag-over { border-color: var(--blue); background: var(--blue-light); }
+
+    #image-area {
+      background: #444;
+      border-radius: 6px;
+      height: 50vh;                  /* Cropper needs a fixed height box */
+      overflow: hidden;
+    }
+    #paper-image { display: block; max-width: 100%; }
+
+    .toolbar { margin: 8px 0; }
+
+    /* page navigation bar for PDFs */
+    .page-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .page-nav input { width: 60px; padding: 4px; }
+
+    #crop-preview {
+      max-width: 100%;
+      max-height: 60px;
+      border: 1px solid var(--grey-border);
+      display: block;
+      margin-top: 6px;
+    }
+    .hint { color: var(--text-light); font-size: 12px; margin: 4px 0; }
+    #target-label { color: var(--blue); font-weight: bold; }
+
+    /* ============================================================
+       6. RIGHT SIDE  (the form)
+       ============================================================ */
+    .form-top { display: flex; gap: 10px; flex-wrap: wrap; }
+    .form-top div { flex: 1; min-width: 140px; }
+
+    label.small-label { display: block; font-size: 12px; color: var(--text-light); margin-bottom: 3px; }
+
+    select, input[type="text"], textarea {
+      width: 100%;
+      font-family: inherit;
+      font-size: 14px;
+      padding: 7px;
+      border: 1px solid var(--grey-border);
+      border-radius: 6px;
+      background: var(--white);
+    }
+    textarea { min-height: 62px; resize: vertical; }
+
+    /* one row of the form = textarea on the left, image box on the right */
+    .field-row {
+      display: flex;
+      gap: 10px;
+      padding: 8px;
+      margin-bottom: 8px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+    }
+    .field-row.active {                  /* the field that will receive the crop */
+      border-color: var(--blue);
+      background: var(--blue-light);
+    }
+    .field-main  { flex: 1; }
+    .field-image { width: 150px; text-align: center; }
+
+    .field-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .field-title label { font-weight: bold; cursor: pointer; }
+
+    .img-box {
+      min-height: 62px;
+      border: 1px dashed var(--grey-border);
+      border-radius: 6px;
+      background: var(--white);
+      color: var(--text-light);
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .img-box img { max-width: 100%; max-height: 120px; }
+    .img-box .remove-img {
+      position: absolute; top: 2px; right: 2px;
+      padding: 0 6px; font-size: 14px; line-height: 18px;
+      background: var(--red); color: #fff; border: none;
+    }
+
+    .answers { display: flex; gap: 18px; flex-wrap: wrap; margin: 6px 0 12px 8px; }
+    .answers label { cursor: pointer; }
+
+    /* ============================================================
+       7. MESSAGES (green = success, red = error) like Tardigrade
+       ============================================================ */
+    #toast {
+      position: fixed; top: 15px; right: 15px; z-index: 9999;
+      padding: 12px 18px; border-radius: 6px;
+      color: #fff; font-size: 14px;
+      display: block; max-width: 350px;
+    }
+    #toast.success { background: var(--green); }
+    #toast.error   { background: var(--red); }
+    #toast.info    { background: var(--blue); }
+  
